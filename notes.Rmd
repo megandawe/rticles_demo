@@ -8,103 +8,72 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+This is what worked for me on Windows 10 as of May 2018 with the latest installs of all these packages if it doesn't "just work" after following the [rticles install instructions](https://github.com/rstudio/rticles) (so you may not have to do this). 
+
+#### 1 Install some R packages
 ```{r}
 #Install rticles
 #install.packages("rticles", type = "source")
 library(rticles)
+#install.packages("here") # for relative file paths to this R Project
+library(here)
 
-#change
-```
-
-When I try to knit `elvesier_test.Rmd`, get error:
-
->You are recommended to install the tinytex package to build PDF.FALSE
-Error: Failed to compile elvesier_test.tex.
-In addition: Warning messages:
-1: In system2(..., stdout = FALSE, stderr = FALSE) :
-  '"pdflatex"' not found
-2: In system2(...) : '"pdflatex"' not found
-Execution halted`
-
-And opening the .tex file says "No TeX installation detetcted" 
-
-```{r}
-#install.packages("tinytex")
+#install.packages("tinytex") 
+#Prompted by initial error "You are recommended to install the tinytex package to build PDF.FALSE Error: Failed to compile elvesier_test.tex."
 library(tinytex)
-library(rmarkdown)
+
+library(rmarkdown) # render function below requires loading this
 ```
 
-Next error:
->processing file: elvesier_test.Rmd
-output file: elvesier_test.knit.md
-Error: Failed to compile elvesier_test.tex.
-In addition: Warning message:
-In system2(..., stdout = FALSE, stderr = FALSE) : '"pdflatex"' not found
-Execution halted
+Note that code below is functionally equivilent to pressing the **knit** button, but probably won't work yet if MikTeX is not installed:
 
-Troublshooting: 
-1
-```{r}
-# Also does not work
-render("C:/Users/Dana/3_Professional/CBE/Reproducibility/rticles_test/elvesier_test/elvesier_test.Rmd")
+```{r eval=FALSE}
+render(here("elvesier_test", "elvesier_test.Rmd"))
 ```
 
-2
+
+#### 2 Install MikTeK
+
+https://miktex.org/download
+
+To mamage your settings with MikTeX, open the newly-installed MikTeX Console, and 
+    - Under Settings --> General, select " Always install missing packages on-the-fly"
+    - Under Settings --> Directories, copy the file path for "Links to the executables have been installed in", which might look like `C:\Users\YourName\AppData\Local\Programs\MiKTeX 2.9`
+
+Still got "pdflatex not found" error when compiling .tex file on knit, and indeed the environment variable is not set:
+
 ```{r}
-# https://tex.stackexchange.com/questions/398218/pdflatex-not-found-windows
 Sys.which("pdflatex")
 pdflatex 
+#Source: https://tex.stackexchange.com/questions/398218/pdflatex-not-found-windows
 ```
 
-3 - It *will* knit as an html document, it's the pdflatex part that's not working
+#### 3 Create and edit .Renviron file to provide path to pdflatex.exe in the MiKTeX directory listed above
+```{r}
+#to programmatically create an Renviron file, uncomment lines below (commented out for knit)
+#install.packages("usethis")
+library(usethis)
+#usethis::edit_r_environ("rticles_test") # This creates an .Renviron file
+```
+
+Now, edit the .Renviron file to contain this exactly as written (adjust for your file path as needed) and save it
+```
+#pdflatex
+PATH=C:\\Users\\Dana\\AppData\\Local\\Programs\\MiKTeX 2.9\\miktex\\bin\\x64;"${PATH}"
+```
+
+Reference: https://community.rstudio.com/t/how-to-set-a-variable-in-renviron/5029/3
+https://stackoverflow.com/questions/33650869/how-can-i-set-the-latex-path-for-sweave-in-r 
+
+#### 4 knit the .Rmd file to a PDF!
+
+More references: 
+
+https://stackoverflow.com/questions/48224162/knitr-wont-compile-pdf-error-in-toolsfile-path-as-absoluteoutput-file
+
 
 https://medium.com/@sorenlind/create-pdf-reports-using-r-r-markdown-latex-and-knitr-on-windows-10-952b0c48bfa9
 
 https://rickpackblog.wordpress.com/2017/10/04/miktex-install-for-r-windows-pdf-output-r-markdown/
 
-https://miktex.org/download
-
-Same error after installing MikTex
-
-```{r}
-#Explicitly test that libraries for rmarkdown are included (RStudio should do this by default)
-library(knitr)
-library(yaml)
-library(htmltools)
-library(caTools)
-library(bitops)
-library(rmarkdown)
-
-```
-
-```{r}
-#to edit Renviron
-#install.packages("usethis")
-library(usethis)
-
-#usethis::edit_r_environ("rticles_test")
-```
-
-
-https://community.rstudio.com/t/how-to-set-a-variable-in-renviron/5029/3
-https://stackoverflow.com/questions/33650869/how-can-i-set-the-latex-path-for-sweave-in-r 
-
-Set . REnviron:
-
->#pdflatex
-PATH=C:\\Users\\Dana\\AppData\\Local\\Programs\\MiKTeX 2.9\\miktex\\bin\\x64;"${PATH}"
-v
-
-New error:
->Output created: elvesier_test.pdf
-Error in tools::file_path_as_absolute(output_file) : 
-  file 'elvesier_test.pdf' does not exist
-In addition: Warning message:
-In readLines(logfile) : incomplete final line found on 'elvesier_test.log'
-
-
-Change MikTek setting to "Install missing packages on the fly"
-https://stackoverflow.com/questions/48224162/knitr-wont-compile-pdf-error-in-toolsfile-path-as-absoluteoutput-file
-
-
-It worked!
