@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #Install rticles
 #install.packages("rticles", type = "source")
 library(rticles)
+
+#change
 ```
 
 When I try to knit `elvesier_test.Rmd`, get error:
@@ -91,7 +93,7 @@ Set . REnviron:
 
 >#pdflatex
 PATH=C:\\Users\\Dana\\AppData\\Local\\Programs\\MiKTeX 2.9\\miktex\\bin\\x64;"${PATH}"
-
+v
 
 New error:
 >Output created: elvesier_test.pdf
