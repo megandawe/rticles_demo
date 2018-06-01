@@ -17,7 +17,7 @@ Example of creating PDFs in journal-specific formats from RMarkdown templates pr
         - plos.csl 
         
         
- - The output files of knitting the .Rmd file are:
+    - The output files of knitting the .Rmd file are:
         - plos_test.tex
         - plos_test.pdf
 
