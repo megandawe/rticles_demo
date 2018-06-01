@@ -1,0 +1,3 @@
+#pdflatex
+PATH=C:\\Users\\Dana\\AppData\\Local\\Programs\\MiKTeX 2.9\\miktex\\bin\\x64;"${PATH}"
+
