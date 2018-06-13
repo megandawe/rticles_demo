@@ -83,4 +83,6 @@ it may be resolved by changing the miktex settings to install required packages 
 
 Reference:  https://stackoverflow.com/questions/48224162/knitr-wont-compile-pdf-error-in-toolsfile-path-as-absoluteoutput-file
 
-
+#### 5 More resources
+###### Referencing
+- [Better BibTeX for Zotero](https://retorque.re/zotero-better-bibtex/installation/)
