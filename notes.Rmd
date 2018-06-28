@@ -11,6 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This is what worked for me on Windows 10 as of May 2018 with the latest installs of all these packages if it doesn't "just work" after following the [rticles install instructions](https://github.com/rstudio/rticles) (so you may not have to do this). 
 
+* For Mac users, go to bottom of page of initial install.packages() does not flawlessly compile a PDF. This is woth worked for me as of June 2018 with the latest installs of R and rticles, running on macOS High Sierra (10.13). 
+
+FOR WINDOWS:
+
 #### 1 Install some R packages
 ```{r}
 #Install rticles
@@ -86,3 +90,28 @@ Reference:  https://stackoverflow.com/questions/48224162/knitr-wont-compile-pdf-
 #### 5 More resources
 ###### Referencing
 - [Better BibTeX for Zotero](https://retorque.re/zotero-better-bibtex/installation/)
+
+
+FOR MAC:
+
+#### 1 Install some R packages
+```{r}
+#Install rticles
+#install.packages("rticles", type = "source")
+```
+If after installing this, try to knit to PDF:
+1. File -> New File -> New RMarkdown
+2. Choose "From Template", select any template you'd like
+3. Knit
+
+My file was able to be compile to .rmd, but was not able to be translated to .tex
+I received the error "no TeX installation detected. please install TeX before compiling"
+
+
+#### 2 Install MacTeX (Mac version of MikTeK)
+
+https://tug.org/mactex/mactex-download.html
+
+Download and install the latest MacTeX. Restart RStudio (I restarted my entire system). 
+Open a new RMarkdown from a template (same steps as above). 
+Knit
